@@ -32,5 +32,13 @@ int try_solve(sudoku_board* init, sudoku_board* solution);
  */
 void print_board(sudoku_board* board, int highlight_mode);
 
-
+/**
+ * @brief Load a board form the given file descriptor.
+ * The board will be loaded top left to bottom right. Characters that aren't digits or '-' will be ignored.
+ * 0 and '-' are treated as an empty space.
+ * @param board 
+ * @param fd 
+ * @return int 
+ */
+int load_from(sudoku_board* board, int fd);
 #endif
