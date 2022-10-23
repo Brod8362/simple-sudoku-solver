@@ -13,6 +13,7 @@ typedef struct algorithm_params {
     int success;
     int iterations;
     int iterations_used;
+    void (*on_iteration_callback)(const sudoku_board*, const sudoku_board*, int);
 } algorithm_params;
 
 /**

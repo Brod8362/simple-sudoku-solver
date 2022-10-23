@@ -16,6 +16,9 @@ int try_solve(const sudoku_board* init, sudoku_board* solution, algorithm_params
         sudoku_copy(solution, &work);
         return 1;
     } else {
+        if (params->on_iteration_callback != NULL) {
+            params->on_iteration_callback(init, &work, params->iterations_used);
+        }
         params->iterations_used++;
         return try_solve(&work, solution, params);
     }
@@ -223,4 +226,5 @@ void params_init(algorithm_params* params, int iterations) {
     params->iterations_used = 0;
     params->iterations = iterations;
     params->success = -1;
+    params->on_iteration_callback = NULL;
 }
