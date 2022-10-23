@@ -3,8 +3,11 @@
 
 void example_callback(const sudoku_board* before, const sudoku_board* after, int iteration_number) {
     printf("ITERATION %d\n", iteration_number);
+    printf("\033[31m");
     print_board(before, 0);
+    printf("\033[33m");
     print_board(after, 0);
+    printf("\033[0m");
 }
 
 int main(void) {
