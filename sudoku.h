@@ -23,14 +23,14 @@ void board_init(sudoku_board* board);
  * @param solution Pointer to a board to store the solution into.
  * @return int 1 on success, 0 otherwise.
  */
-int try_solve(sudoku_board* init, sudoku_board* solution);
+int try_solve(const sudoku_board* init, sudoku_board* solution, int depth);
 
 /**
  * @brief Print a board to stdout.
  * 
  * @param board 
  */
-void print_board(sudoku_board* board, int highlight_mode);
+void print_board(const sudoku_board* board, int highlight_mode);
 
 /**
  * @brief Load a board form the given file descriptor.
@@ -41,4 +41,20 @@ void print_board(sudoku_board* board, int highlight_mode);
  * @return int 
  */
 int load_from(sudoku_board* board, int fd);
+
+/**
+ * @brief Copy a sudoku board from src to dst
+ * 
+ * @param dst Destination board
+ * @param src Source board
+ */
+void sudoku_copy(sudoku_board* dst, const sudoku_board* src);
+
+/**
+ * @brief Check if a given board is solved or not.
+ * 
+ * @param board 
+ * @return int 
+ */
+int board_solved(const sudoku_board* board);
 #endif
