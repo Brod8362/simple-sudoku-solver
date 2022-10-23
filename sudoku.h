@@ -9,6 +9,12 @@ typedef struct sudoku_board {
     char board[9][9];
 } sudoku_board;
 
+typedef struct algorithm_params {
+    int success;
+    int iterations;
+    int iterations_used;
+} algorithm_params;
+
 /**
  * @brief Initialize a board to all zeroes.
  * 
@@ -21,9 +27,10 @@ void board_init(sudoku_board* board);
  * 
  * @param init Initial board.
  * @param solution Pointer to a board to store the solution into.
+ * @param params Struct to store algorithm parameters and result 
  * @return int 1 on success, 0 otherwise.
  */
-int try_solve(const sudoku_board* init, sudoku_board* solution, int depth);
+int try_solve(const sudoku_board* init, sudoku_board* solution, algorithm_params* params);
 
 /**
  * @brief Print a board to stdout.
@@ -57,4 +64,7 @@ void sudoku_copy(sudoku_board* dst, const sudoku_board* src);
  * @return int 
  */
 int board_solved(const sudoku_board* board);
+
+void params_init(algorithm_params* params, int iterations);
+
 #endif

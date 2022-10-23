@@ -6,17 +6,18 @@
 
 #define IS_DIGIT(c) ((c >= '0' && c <= '9'))
 
-int try_solve(const sudoku_board* init, sudoku_board* solution, int depth) {
+int try_solve(const sudoku_board* init, sudoku_board* solution, algorithm_params* params) {
     sudoku_board work;
     board_init(&work);
-    if (depth <= 0) {
+    if (params->iterations_used >= params->iterations) {
         return 0;
     }
     if (try_solve_inner(init, &work)) {
         sudoku_copy(solution, &work);
         return 1;
     } else {
-        return try_solve(&work, solution, depth-1);
+        params->iterations_used++;
+        return try_solve(&work, solution, params);
     }
 }
 
@@ -48,7 +49,7 @@ int legal(const sudoku_board* board, size_t idx, int is_row, int check_solved) {
     memset(encountered, 0, 9*sizeof(char));
     for (size_t pos = 0; pos < 9; pos++) {
         int index = (is_row ? board->board[idx][pos] : board->board[pos][idx])-1;
-        if (index != -1) { //will be -1 for empty spaces
+        if (index != -1) { //will be -1 for empty spaces because 0-1
             if (encountered[index] == 0) {
                 encountered[index]++;
             } else {
@@ -216,4 +217,10 @@ int board_solved(const sudoku_board* board) {
         }
     }
     return 1;
+}
+
+void params_init(algorithm_params* params, int iterations) {
+    params->iterations_used = 0;
+    params->iterations = iterations;
+    params->success = -1;
 }
