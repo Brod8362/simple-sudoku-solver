@@ -21,7 +21,7 @@ void board_init(sudoku_board* board);
  * 
  * @param init Initial board.
  * @param solution Pointer to a board to store the solution into.
- * @return int 0 on success, 1 otherwise.
+ * @return int 1 on success, 0 otherwise.
  */
 int try_solve(sudoku_board* init, sudoku_board* solution);
 

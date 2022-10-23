@@ -7,6 +7,13 @@
 #define IS_DIGIT(c) ((c >= '0' && c <= '9'))
 
 int try_solve(sudoku_board* init, sudoku_board* solution) {
+    // [col][row][number]
+    char working_board[9][9][9];
+    for (size_t i = 0; i < 9; i++) {
+        for (size_t j = 0; j < 9; j++) {
+            
+        }
+    }
     return 0;
 }
 
@@ -14,7 +21,7 @@ int legal(sudoku_board* board, size_t idx, int is_row, int check_solved) {
     char encountered[9];
     memset(encountered, 0, 9*sizeof(char));
     for (size_t pos = 0; pos < 9; pos++) {
-        int index = (is_row ? board->board[pos][idx] : board->board[idx][pos])-1;
+        int index = (is_row ? board->board[idx][pos] : board->board[pos][idx])-1;
         if (index != -1) { //will be -1 for empty spaces
             if (encountered[index] == 0) {
                 encountered[index]++;
@@ -71,10 +78,9 @@ int segment_legal(sudoku_board* board, size_t segment_x, size_t segment_y, int c
 }
 
 void print_board(sudoku_board* board, int highlight_mode) {
-    if (highlight_mode != 0) {
-        //TODO: some kind of highlighting stuff here
-    }
+    printf("┏━━━━━━━┳━━━━━━━┳━━━━━━━┓\n");
     for (int i = 0; i < 9; i++) {
+        printf("┃ ");
         for (int j = 0; j < 9; j++) {
             int value = board->board[i][j];
             if (value == 0) {
@@ -86,11 +92,12 @@ void print_board(sudoku_board* board, int highlight_mode) {
                 printf("┃ ");
             }
         }
-        printf("\n");
+        printf("┃\n");
         if (i == 2 || i == 5) {
-            printf("━━━━━━╂━━━━━━━╂━━━━━━\n");
+            printf("┠━━━━━━━╂━━━━━━━╂━━━━━━━┨\n");
         }
     }
+    printf("┗━━━━━━━┻━━━━━━━┻━━━━━━━┛\n");
 }
 
 void board_init(sudoku_board* board) {
@@ -100,8 +107,7 @@ void board_init(sudoku_board* board) {
 }
 
 int load_from(sudoku_board* board, int fd) {
-    int x_pos = 0;
-    int y_pos = 0;
+    int x_pos = 0, y_pos = 0;
     char c;
     while (y_pos < 9 && read(fd, &c, 1)) {
         if (IS_DIGIT(c) || c == '-') {
@@ -120,4 +126,11 @@ int load_from(sudoku_board* board, int fd) {
         }
     }
     return (y_pos == 9);
+}
+
+void possible_values(sudoku_board* board, char* possiblity_matrix, int x, int y) {
+    char value = board->board[y][x];
+    if (board->board[y][x] != 0) {
+
+    }
 }
