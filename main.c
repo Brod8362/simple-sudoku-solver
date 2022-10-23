@@ -10,7 +10,12 @@ void example_callback(const sudoku_board* before, const sudoku_board* after, int
     printf("\033[0m");
 }
 
-int main(void) {
+int main(int argc, char** argv) {
+    int debug_print = 0;
+    for (int i = 1; i < argc; i++) {
+        if (strcmp(argv[i], "-d") == 0)
+            debug_print = 1;
+    }
     sudoku_board board;
     load_from(&board, 0);
     sudoku_board solved;
@@ -20,7 +25,8 @@ int main(void) {
 
     algorithm_params params;
     params_init(&params, 20);
-    params.on_iteration_callback = example_callback;
+    if (debug_print)
+        params.on_iteration_callback = example_callback;
 
     if (try_solve(&board, &solved, &params)) {
         if (board_solved(&solved)) {
